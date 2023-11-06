@@ -1,0 +1,25 @@
+name: Launch testnet
+
+on:
+  pull_request:
+    branches: ["*"]
+            
+jobs:
+  create-testnet:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: maidsafe/sn-testnet-action@main
+        with:
+          action: create
+          ansible-vault-password: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-access-key-secret: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-2
+          do-token: ${{ secrets.DO_PAT }}
+          node-count: 20
+          provider: digital-ocean
+          security-group-id: sg-0d47df5b3f0d01e2a
+          ssh-secret-key: ${{ secrets.SSH_SECRET_KEY }}
+          subnet-id: subnet-018f2ab26755df7f9
+          testnet-name: roland-action
+          vm-count: 2
