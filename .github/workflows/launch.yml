@@ -8,9 +8,9 @@ jobs:
   create-testnet:
     runs-on: ubuntu-latest
     steps:
-      - uses: maidsafe/sn-testnet-action@main
+      - uses: RolandSherwin/sn-testnet-action@upload_inventory
         with:
-          action: create
+          action: resources
           ansible-vault-password: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-access-key-secret: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -21,5 +21,5 @@ jobs:
           security-group-id: sg-0d47df5b3f0d01e2a
           ssh-secret-key: ${{ secrets.SSH_SECRET_KEY }}
           subnet-id: subnet-018f2ab26755df7f9
-          testnet-name: roland-action
+          testnet-name: RolandRpcCheck
           vm-count: 2
