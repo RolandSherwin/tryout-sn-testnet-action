@@ -10,16 +10,43 @@ jobs:
     steps:
       - uses: RolandSherwin/sn-testnet-action@upload_inventory
         with:
+          action: create
+          ansible-vault-password: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-access-key-secret: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-2
+          do-token: ${{ secrets.DO_PAT }}
+          node-count: 2
+          provider: digital-ocean
+          security-group-id: sg-0d47df5b3f0d01e2a
+          ssh-secret-key: ${{ secrets.SSH_SECRET_KEY }}
+          subnet-id: subnet-018f2ab26755df7f9
+          testnet-name: RolandAction
+          vm-count: 2
+
+      - uses: RolandSherwin/sn-testnet-action@upload_inventory
+        with:
           action: resources
           ansible-vault-password: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-access-key-secret: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-west-2
           do-token: ${{ secrets.DO_PAT }}
-          node-count: 20
+          node-count: 2
           provider: digital-ocean
           security-group-id: sg-0d47df5b3f0d01e2a
           ssh-secret-key: ${{ secrets.SSH_SECRET_KEY }}
           subnet-id: subnet-018f2ab26755df7f9
-          testnet-name: RolandRpcCheck
+          testnet-name: RolandAction
           vm-count: 2
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: resources
+          path: gg
+  
+      - name: Get resources
+        shell: bash
+        run: |
+          ls gg
+          ls gg/resources
