@@ -23,3 +23,14 @@ jobs:
           subnet-id: subnet-018f2ab26755df7f9
           testnet-name: RolandRpcCheck
           vm-count: 2
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: resources
+          path: gg
+  
+      - name: Get resources
+        shell: bash
+        run: |
+          ls gg
+          ls gg/resources
