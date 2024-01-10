@@ -8,7 +8,7 @@ jobs:
   create-testnet:
     runs-on: ubuntu-latest
     steps:
-      - uses: RolandSherwin/sn-testnet-action@upload_inventory
+      - uses: RolandSherwin/sn-testnet-action@wan_nightly
         with:
           action: create
           ansible-vault-password: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
@@ -22,11 +22,11 @@ jobs:
           ssh-secret-key: ${{ secrets.SSH_SECRET_KEY }}
           subnet-id: subnet-018f2ab26755df7f9
           testnet-name: RolandAction
-          vm-count: 2
+          vm-count: 1
 
-      - uses: RolandSherwin/sn-testnet-action@upload_inventory
+      - uses: RolandSherwin/sn-testnet-action@wan_nightly
         with:
-          action: resources
+          action: logs
           ansible-vault-password: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-access-key-secret: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -38,15 +38,31 @@ jobs:
           ssh-secret-key: ${{ secrets.SSH_SECRET_KEY }}
           subnet-id: subnet-018f2ab26755df7f9
           testnet-name: RolandAction
-          vm-count: 2
+          vm-count: 1
+
+      - uses: RolandSherwin/sn-testnet-action@wan_nightly
+        with:
+          action: destroy
+          ansible-vault-password: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-access-key-secret: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-2
+          do-token: ${{ secrets.DO_PAT }}
+          node-count: 2
+          provider: digital-ocean
+          security-group-id: sg-0d47df5b3f0d01e2a
+          ssh-secret-key: ${{ secrets.SSH_SECRET_KEY }}
+          subnet-id: subnet-018f2ab26755df7f9
+          testnet-name: RolandAction
+          vm-count: 1
 
       - uses: actions/download-artifact@v3
         with:
-          name: resources
+          name: testnet_logs
           path: gg
   
-      - name: Get resources
+      - name: Get logs
         shell: bash
         run: |
           ls gg
-          ls gg/resources
+          ls gg/testnet_logs
